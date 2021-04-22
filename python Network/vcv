@@ -1,0 +1,30 @@
+#Estableblish connection 
+def socket_accept() :
+    connection, address = s.accept()  
+    print("connection as be Establish : "+ 'Ip '+ address[0]+" on Port "+str(address[1]))    
+    send_commands(connection)
+    connection.close()  
+
+
+#send commande to client 
+def send_commands(connection) :
+    
+    while True :
+        cmd  = input()
+        if cmd == 'quit' :
+            connection.close()
+            s.close()
+            sys.exit()
+        if len(str.encode(cmd)) > 0 :
+            connection.send(str.encode(cmd))
+            client_response = str(connection.recv(1024),'utf-8')
+            print(client_response,end="")
+            
+            
+            
+def main() :
+    create_socket()
+    bind_socket()
+    socket_accept()
+    
+main()
